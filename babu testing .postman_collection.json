@@ -1,0 +1,315 @@
+{
+	"info": {
+		"_postman_id": "27e00f80-a22d-4f09-9148-f84c1eb3b531",
+		"name": "babu testing ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get name ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "66dfec40-08ca-4506-b831-62412d6713bc",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData._meta.success).to.eql(true);\r",
+							"});\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData._meta.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"let response = pm.response.json();\r",
+							"pm.environment.set(\"firstNameToCheck\",response.result[1].first_name)\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}{{users}}?Authorization={{Token}}",
+					"host": [
+						"{{url}}{{users}}"
+					],
+					"query": [
+						{
+							"key": "Authorization",
+							"value": "{{Token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get 1 user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d6d66b4a-76e3-4024-966d-08594423f515",
+						"exec": [
+							"pm.environment.get(\"firstNameToCheck\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "4cac6c14-e892-4ff2-9cd3-0661c2711e0c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData._meta.success).to.eql(true);\r",
+							"});\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData._meta.code).to.eql(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "GET /public-api/users?first_name={{firstNameToCheck}}",
+					"host": [
+						"GET "
+					],
+					"path": [
+						"public-api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "first_name",
+							"value": "{{firstNameToCheck}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2344de4d-72b8-4c0f-ac54-a6110a7bc02c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData._meta.success).to.eql(true);\r",
+							"});\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData._meta.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"let response = pm.response.json();\r",
+							"pm.environment.set(\"newId\",response.result.id)\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\": \"first{{$timestamp}}\",\r\n    \"last_name\": \"last{{$timestamp}}\",\r\n    \"gender\": \"male\",\r\n    \"email\": \"user_{{$timestamp}}@example.com\",\r\n    \"status\": \"active\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}{{users}}",
+					"host": [
+						"{{url}}{{users}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get by ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5acc5414-c5f2-494e-9eac-dd4958b6f8ce",
+						"exec": [
+							"pm.environment.get(\"newId\")"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "964c135d-942e-4dbf-8967-ccf1aa7f16b9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData._meta.success).to.eql(true);\r",
+							"});\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData._meta.code).to.eql(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}{{users}}/{{newId}}",
+					"host": [
+						"{{url}}{{users}}"
+					],
+					"path": [
+						"{{newId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE USER",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9abe8e86-cfe1-49bb-ad14-174191db0191",
+						"exec": [
+							"pm.environment.get(\"newId\")"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "243309ec-616e-47a4-b341-21213b5f0e90",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData._meta.success).to.eql(true);\r",
+							"});\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData._meta.code).to.eql(200);\r",
+							"});\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.result.first_name).to.eql(\"Sandy197581\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\": \"Sandy197581\",\r\n    \"last_name\": \"Babu197581\",\r\n    \"gender\": \"female\",\r\n    \"email\": \"user_Sandy_babu@example.com\",\r\n    \"status\": \"active\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}{{users}}/{{newId}}",
+					"host": [
+						"{{url}}{{users}}"
+					],
+					"path": [
+						"{{newId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
